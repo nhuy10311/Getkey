@@ -1,0 +1,27 @@
+<?php
+// ... đoạn login ở trên giữ nguyên ...
+
+// sau khi admin login:
+if(isset($_SESSION['admin'])){
+    // tạo key tự động
+    if(isset($_POST['new_key'])){
+        $key = trim($_POST['new_key']);
+        file_put_contents("keys.txt", $key.PHP_EOL, FILE_APPEND);
+        echo "Đã tạo key: $key <br>";
+    }
+
+    echo '<form method="POST">
+            Nhập key mới: <input type="text" name="new_key">
+            <button type="submit">Tạo Key</button>
+          </form>';
+
+    // hiển thị tất cả key
+    echo "<h3>Danh sách key:</h3>";
+    if(file_exists("keys.txt")){
+        $keys = file("keys.txt", FILE_IGNORE_NEW_LINES);
+        foreach($keys as $k){
+            echo $k . "<br>";
+        }
+    }
+}
+?>
